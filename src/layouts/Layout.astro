@@ -5,7 +5,7 @@ export interface Props {
   title: string;
 }
 
-const { title } = Astro.props;
+const { title, desc } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -17,6 +17,9 @@ const { title } = Astro.props;
     <link rel="sitemap" href="/sitemap-index.xml">
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content={desc || "Discover high-quality parts for mining, locomotive, and heavy machinery at Spectrum Transport. Our extensive selection includes reliable components to keep your equipment running smoothly. Shop now and benefit from our expertise and exceptional service."} />
+    <script is:inline data-domain="spectrum-transport.com" src="https://plausible.io/js/script.js"></script>
+Í
   </head>
   <body>
     <Navbar />

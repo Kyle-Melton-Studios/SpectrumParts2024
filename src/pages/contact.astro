@@ -10,14 +10,34 @@ import Layout from "../layouts/Layout.astro";
     </div>
     <div class="max-w-5xl mx-auto">
       <div>
-        <div
-          class="bg-white rounded-b py-12 lg:px-28 px-8"
-        >
+        <div class="bg-white rounded-b py-12 lg:px-28 px-8">
           <h1
             class="md:text-3xl text-xl font-bold leading-7 text-center text-gray-800"
           >
             CONTACT US
-          </h1><form name="contact" method="POST" action="/thanks" data-netlify="true">
+          </h1><form
+            name="contact"
+            method="POST"
+            action="https://api.web3forms.com/submit"
+          >
+            <input type="hidden" name="from_name" value="Spectrum Parts" />
+            <input
+              type="hidden"
+              name="redirect"
+              value="https://spectrum-transport.com/thanks"
+            />
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="hidden"
+              style="display: none;"
+            />
+            <input type="hidden" name="subject" value="New Contact Request" />
+            <input
+              type="hidden"
+              name="access_key"
+              value="f0aa8643-6314-4a6a-94e5-cf80fd653856"
+            />
             <div class="md:flex items-center mt-12">
               <div class="md:w-full flex flex-col">
                 <label

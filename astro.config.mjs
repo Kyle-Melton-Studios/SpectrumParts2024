@@ -9,8 +9,4 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: 'https://spectrum-transport.com',
   integrations: [tailwind(), react(), prefetch(), sitemap()],
-  server: {
-    port: 1234,
-    host: true
-  }
 });

@@ -13,12 +13,17 @@ import Layout from "../layouts/Layout.astro";
           Let&apos;s chat and get a quote!
         </p>
         <form
-          netlify
           name="quote"
           method="POST"
-          action="/thanks"
-          data-netlify="true"
+          action="https://api.web3forms.com/submit"
         >
+        <input type="hidden" name="from_name" value="Spectrum Parts">
+        <input type="hidden" name="redirect" value="https://spectrum-transport.com/thanks">
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        <input type="hidden" name="subject" value="New Quote Request">
+        <input type="hidden" name="access_key" value="f0aa8643-6314-4a6a-94e5-cf80fd653856">
+
+
           <div class="md:flex items-center mt-12">
             <div class="md:w-72 flex flex-col">
               <label class="text-base font-semibold leading-none text-gray-800">
@@ -94,6 +99,7 @@ import Layout from "../layouts/Layout.astro";
             will not be shared with any third parties.
           </p>
           <div class="items-center justify-center text-center w-full">
+
             <button
               class="btn w-full mt-6 mb-2 bg-blue-700 text-white"
               type="submit"
