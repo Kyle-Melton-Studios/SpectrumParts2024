@@ -1,0 +1,145 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Get a Quote | Spectrum Parts & Components">
+  <main class="py-16 mx-6">
+    <h1 class="text-center mt-2 text-2xl font-bold text-white">GET A QUOTE</h1>
+    <div class="w-full flex items-center justify-center my-8">
+      <div class="bg-white shadow rounded py-12 lg:px-28 px-8">
+        <p
+          class="md:text-3xl text-xl font-bold leading-7 text-center text-gray-700"
+        >
+          Let&apos;s chat and get a quote!
+        </p>
+        <form
+          netlify
+          name="quote"
+          method="POST"
+          action="/thanks"
+          data-netlify="true"
+        >
+          <div class="md:flex items-center mt-12">
+            <div class="md:w-72 flex flex-col">
+              <label class="text-base font-semibold leading-none text-gray-800">
+                Name
+              </label>
+              <input
+                arial-label="Please enter your name"
+                type="text"
+                name="name"
+                class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                placeholder="Please enter your name"
+                required
+              />
+            </div>
+            <div class="md:w-72 flex flex-col md:ml-6 md:mt-0 mt-4">
+              <label class="text-base font-semibold leading-none text-gray-800">
+                Email Address
+              </label>
+              <input
+                arial-label="Please enter your email address"
+                type="email"
+                name="email"
+                class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                placeholder="Please enter your email address"
+                required
+              />
+            </div>
+          </div>
+          <div class="md:flex items-center mt-8">
+            <div class="md:w-72 flex flex-col">
+              <label class="text-base font-semibold leading-none text-gray-800">
+                Company name
+              </label>
+              <input
+                arial-label="Please enter your company name"
+                type="text"
+                name="company"
+                class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                placeholder="Please enter your company name"
+              />
+            </div>
+            <div class="md:w-72 flex flex-col md:ml-6 md:mt-0 mt-4">
+              <label class="text-base font-semibold leading-none text-gray-800">
+                Country
+              </label>
+              <input
+                arial-label="Please enter your country name"
+                type="text"
+                name="country"
+                class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                placeholder="Please enter your country name"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <div class="w-full flex flex-col mt-8">
+              <label class="text-base font-semibold leading-none text-gray-800">
+                Message
+              </label>
+              <textarea
+                id="messageArea"
+                name="message"
+                aria-label="leave a message"
+                role="textbox"
+                class="h-36 text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400 resize-none"
+              >I am interested in the following parts:</textarea>
+            </div>
+          </div>
+          <p class="text-xs leading-3 text-gray-600 mt-4">
+            By clicking submit you agree to be contacted by our company to
+            discuss parts. <br />Information is only used for this purpose and
+            will not be shared with any third parties.
+          </p>
+          <div class="items-center justify-center text-center w-full">
+            <button
+              class="btn w-full mt-6 mb-2 bg-blue-700 text-white"
+              type="submit"
+            >
+              SUBMIT
+            </button>
+            <a
+              class="text-gray-600 underline ml-2 mt-6 mx-auto"
+              href="/catalog"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 mr-2 inline"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
+              </svg>
+              Back to Catalog
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  <script is:inline>
+     function appendData() {
+    const spectrumParts = JSON.parse(localStorage.getItem("spectrum_products"));
+    if (spectrumParts === null) {
+      return;
+    } else {
+      const myTextArea = document.getElementById("messageArea");
+      const newData = spectrumParts.map((part, index) => {
+        const isLast = index === spectrumParts.length - 1;
+        const isFirst = index === 0;
+        return `${isFirst ? '\n \n' : ''}${part.PartNumber} - ${part.Description}${isLast ? '' : '\n'}`;
+      });
+      myTextArea.value += newData.join('');
+    }
+  }
+
+  window.onload = appendData;
+  </script>
+</Layout>

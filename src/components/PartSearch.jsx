@@ -3,60 +3,120 @@ import toast, { Toaster } from "react-hot-toast";
 
 function PartSearch({ partsData }) {
   const [search, setSearch] = useState("");
-  const [parts, setParts] = useState([]);
-  const [filteredParts, setFilteredParts] = useState([]);
+  const [parts, setParts] = useState(partsData);
+  const [filteredParts, setFilteredParts] = useState(partsData);
   const [saveProducts, setSaveProducts] = useState([]);
   const [savedProducts, setSavedProducts] = useState(
     JSON.parse(localStorage.getItem("spectrum_products")) || []
   );
-
-  const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    const newFilteredItems = parts.filter((item) =>
-      item.Description.includes(search)
-    );
-    setFilteredParts(newFilteredItems);
-  }, [search]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50;
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const searchValue = e.target.value;
+    const searchValue = search;
     setSearch(searchValue);
+    if (searchValue.length === 0) {
+      setFilteredParts(parts);
+    } else {
+      const newFilteredItems = parts.filter((obj) => {
+        return obj.Description.toString().toLowerCase().includes(search.toLowerCase());
+      });
+      setFilteredParts(newFilteredItems);
+    }
   };
 
   const deleteProduct = (part) => {
     const newSaveProducts = [...savedProducts];
-    const index = newSaveProducts.indexOf(part);
+    const index = newSaveProducts.findIndex((item) => item.row_number === part.row_number);
     if (index > -1) {
       newSaveProducts.splice(index, 1);
       setSavedProducts(newSaveProducts);
+      localStorage.setItem(
+        "spectrum_products",
+        JSON.stringify(newSaveProducts)
+      );
       toast.success("Part removed from your list");
     }
   };
 
+  // calculate the index of the first and last items for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // get the items for the current page
+  const currentItems = filteredParts.slice(indexOfFirstItem, indexOfLastItem);
+
+  // calculate the total number of pages
+  const totalPages = Math.ceil(filteredParts.length / itemsPerPage);
+
+  // render the pagination buttons
+  const paginationButtons = [];
+  if (currentPage > 1) {
+    paginationButtons.push(
+      <button
+        className="btn btn-sm btn-primary mr-1"
+        key="previous"
+        onClick={() => setCurrentPage(currentPage - 1)}
+      >
+        Prev
+      </button>
+    );
+  } else {
+    paginationButtons.push(
+      <button className="btn btn-sm btn-primary mr-1" key="previous" disabled>
+        Prev
+      </button>
+    );
+  }
+  if (currentPage < totalPages) {
+    paginationButtons.push(
+      <button
+        className="btn btn-sm btn-primary"
+        key="next"
+        onClick={() => setCurrentPage(currentPage + 1)}
+      >
+        Next
+      </button>
+    );
+  } else {
+    paginationButtons.push(
+      <button className="btn btn-sm btn-primary" key="next" disabled>
+        Next
+      </button>
+    );
+  }
+
   return (
     <>
       <Toaster />
-
       <div className="max-w-7xl mx-auto">
-        <div className="mb-3 grid grid-cols-3 sm:grid-cols-3 gap-4">
+        <div className="mb-3 grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div className="hidden sm:block">
-            <p className="text-white mt-5 text-left">Showing parts:</p>
+            <p className="text-white mt-5 mb-2 text-left">
+              Showing page: {currentPage} of {totalPages}
+            </p>
+            {paginationButtons}
           </div>
           <div className="xl:w-96 mx-auto w-full mb-4 mt-4">
-            <input
-              type="search"
-              className="form-control relative inline min-w-0 w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="Search a Part Number or Part Description"
-              aria-label="Search"
-              onChange={handleSearch}
-              aria-describedby="button-addon2"
-            ></input>
+            <form onSubmit={handleSearch}>
+              <input
+                type="search"
+                className="input rounded-xl form-control relative inline min-w-0 w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                placeholder="&#128269;  Search a Part Number or Part Description"
+                aria-label="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-describedby="button-addon2"
+              ></input>
+            </form>
           </div>
           <div className="mt-5 ml-auto">
-            <label htmlFor="my-modal" className="">
-              <span className="text-white">
+            <label
+              htmlFor="my-modal"
+              className="cursor-pointer text-white hover:text-gray-300"
+            >
+              <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -72,14 +132,13 @@ function PartSearch({ partsData }) {
                   />
                 </svg>
               </span>
-              <div className="-ml-1 badge badge-lg p-2 bg-yellow-600 text-white">
+              <div className="-ml-1 badge badge-lg p-2 bg-yellow-400 text-black">
                 {savedProducts ? savedProducts.length : 0}
               </div>
             </label>
           </div>
         </div>
       </div>
-
       <div className="overflow-x-auto max-w-7xl relative mx-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100">
@@ -105,10 +164,10 @@ function PartSearch({ partsData }) {
             </tr>
           </thead>
           <tbody>
-            {search
-              ? filteredParts.map((part, index) => (
+            {filteredParts
+              ? currentItems.map((part) => (
                   <tr
-                    key={index}
+                    key={part.row_number}
                     className="bg-white border-b hover:bg-gray-200"
                   >
                     <td className="py-3 px-6">
@@ -169,7 +228,7 @@ function PartSearch({ partsData }) {
                     <td className="py-3 px-6">{part.OEM}</td>
                     <td className="py-3 px-6 text-center">
                       <a
-                        href={`/part/${part.PartNumber}`}
+                        href={`/part/${part.row_number}`}
                         className="focus:outline-none text-blue-900 bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
                       >
                         <button className=" hidden sm:inline">
@@ -180,9 +239,9 @@ function PartSearch({ partsData }) {
                     </td>
                   </tr>
                 ))
-              : filteredParts.map((part, index) => (
+              : parts.map((part) => (
                   <tr
-                    key={index}
+                    key={part.row_number}
                     className="bg-white border-b hover:bg-gray-200"
                   >
                     <td className="py-3 px-6">
@@ -243,8 +302,8 @@ function PartSearch({ partsData }) {
                     <td className="py-3 px-6">{part.OEM}</td>
                     <td className="py-3 px-6 text-center">
                       <a
-                        href={`/part/${part.PartNumber}`}
-                        className="focus:outline-none text-blue-900 bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
+                        href={`/part/${part.row_number}`}
+                        className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
                       >
                         <button className=" hidden sm:inline">
                           Contact for Availability
@@ -285,7 +344,8 @@ function PartSearch({ partsData }) {
                     </svg>
                   </button>
                   <p className="text-gray-700 inline-block">
-                    {product.PartNumber} - <strong>{product.Description}</strong>
+                    {product.PartNumber} -{" "}
+                    <strong>{product.Description}</strong>
                   </p>
                 </li>
               ))}
@@ -294,7 +354,7 @@ function PartSearch({ partsData }) {
             <p className="text-gray-700">No products saved yet.</p>
           )}
           <div className="modal-action">
-            <a href="/catalog/quote">
+            <a href="/quote">
               <button className="btn bg-blue-700 text-white">
                 Get a Quote
               </button>

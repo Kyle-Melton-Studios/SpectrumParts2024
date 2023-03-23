@@ -72,6 +72,22 @@ import Layout from "../../layouts/Layout.astro";
         </ul>
       </div>
     </div>
-    <img src="/cintillo_truck.b35d5020.png" class="mt-8 overflow-hidden h-12" alt="mining truck parts"/>
+    <div id="bg" class="mt-6"></div>
   </main>
 </Layout>
+<style>
+  #bg {
+    background: url("/cintillo_truck.b35d5020.png");
+    height: 62px;
+    background-repeat: repeat-x;
+    animation: 100s scroll infinite linear;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  @keyframes scroll {
+    100% {
+      background-position: -3000px 0;
+    }
+  }
+</style>

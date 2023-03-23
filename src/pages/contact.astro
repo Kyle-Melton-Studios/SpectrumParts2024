@@ -5,10 +5,10 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="Contact Us | Spectrum Parts & Components">
   <main>
     <div
-      class="mx-auto max-w-7xl mt-16 bg-[url('/Group.0f78f805.png')] bg-cover py-16"
+      class="mx-auto max-w-5xl mt-16 bg-[url('/Group.0f78f805.png')] bg-cover py-16"
     >
     </div>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-5xl mx-auto">
       <div>
         <div
           class="bg-white rounded-b py-12 lg:px-28 px-8"
@@ -17,7 +17,7 @@ import Layout from "../layouts/Layout.astro";
             class="md:text-3xl text-xl font-bold leading-7 text-center text-gray-800"
           >
             CONTACT US
-          </h1><form name="contact" method="POST" data-netlify="true">
+          </h1><form name="contact" method="POST" action="/thanks" data-netlify="true">
             <div class="md:flex items-center mt-12">
               <div class="md:w-full flex flex-col">
                 <label
@@ -25,10 +25,12 @@ import Layout from "../layouts/Layout.astro";
                   >Name</label
                 ><input
                   tabindex="0"
-                  arial-label="Please input name"
+                  name="name"
+                  arial-label="Please enter your name"
                   type="text"
-                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
-                  placeholder="Please input name"
+                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                  placeholder="Please enter your name"
+                  required
                 />
               </div><div class="md:w-full flex flex-col md:ml-6 md:mt-0 mt-4">
                 <label
@@ -36,10 +38,12 @@ import Layout from "../layouts/Layout.astro";
                   >Email Address</label
                 ><input
                   tabindex="0"
-                  arial-label="Please input email address"
-                  type="text"
-                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
-                  placeholder="Please input email address"
+                  name="email"
+                  arial-label="Please enter your email address"
+                  type="email"
+                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                  placeholder="Please enter your email address"
+                  required
                 />
               </div>
             </div><div class="md:flex items-center mt-8">
@@ -49,10 +53,11 @@ import Layout from "../layouts/Layout.astro";
                   >Company name</label
                 ><input
                   tabindex="0"
-                  arial-label="Please input company name"
+                  name="company"
+                  arial-label="Please enter your company name"
                   type="text"
-                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
-                  placeholder="Please input company name"
+                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                  placeholder="Please enter your company name"
                 />
               </div><div class="md:w-full flex flex-col md:ml-6 md:mt-0 mt-4">
                 <label
@@ -60,10 +65,11 @@ import Layout from "../layouts/Layout.astro";
                   >Country</label
                 ><input
                   tabindex="0"
-                  arial-label="Please input country name"
+                  name="country"
+                  arial-label="Please enter your country name"
                   type="text"
-                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
-                  placeholder="Please input country name"
+                  class="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400"
+                  placeholder="Please enter your country name"
                 />
               </div>
             </div><div>
@@ -73,9 +79,11 @@ import Layout from "../layouts/Layout.astro";
                   >Message</label
                 ><textarea
                   tabindex="0"
+                  name="message"
                   aria-label="leave a message"
                   role="textbox"
-                  class="h-36 text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100 resize-none"
+                  required
+                  class="h-36 text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-400 resize-none"
                 ></textarea>
               </div>
             </div><p class="text-xs leading-3 text-gray-600 mt-4">
