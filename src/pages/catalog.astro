@@ -3,13 +3,13 @@ import Layout from "../layouts/Layout.astro";
 import PartSearch from "../components/PartSearch.jsx";
 
 const res = await fetch(
-    "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+  "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
+  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
 );
 const items = await res.json();
 
@@ -20,11 +20,25 @@ const savedProducts = [];
 ---
 
 <Layout title="Catalog | Spectrum Parts and Components">
+  <style>
+    .spectrum-loader {
+      z-index: 1000;
+      width: 100vh !important;
+      height: 100vh !important;
+    }
+  </style>
+  <div
+  id="loader"
+    class="pt-24 text-center mx-auto spectrum-loader rounded bg-[#191e67]"
+  >
+    <p class="text-center text-xl font-black">LOADING PARTS</p>
+    <progress class="progress progress-primary bg-gray-200 w-56 mx-auto"></progress>
+  </div>
   <main class="max-w-7xl mx-auto mt-24 sm:mt-6 px-4">
     <h1 class="text-center mt-6 text-2xl font-bold text-white">
       PARTS CATALOG
     </h1>
-    <PartSearch client:only partsData={parts} />
+    <PartSearch client:load partsData={parts} />
   </main>
 
   <div class="footer fixed bottom-0 right-0 left-0 flex">
@@ -32,5 +46,13 @@ const savedProducts = [];
     <div class="yellow cssBG"></div>
     <div class="center text-center pt-2"></div>
   </div>
-  <script is:inline></script>
+  <script is:inline>
+    // Show the loading animation
+document.getElementById("loader").style.display = "block";
+
+// Hide the loading animation after 5 seconds
+setTimeout(function() {
+  document.getElementById("loader").style.display = "none";
+}, 5000);
+  </script>
 </Layout>

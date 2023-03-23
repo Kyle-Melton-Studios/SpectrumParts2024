@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, componentDidMount } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 function PartSearch({ partsData }) {
@@ -90,7 +90,7 @@ function PartSearch({ partsData }) {
   return (
     <>
       <Toaster />
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto z-30">
         <div className="mb-3 grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div className="hidden sm:block">
             <p className="text-white mt-5 mb-2 text-left">
