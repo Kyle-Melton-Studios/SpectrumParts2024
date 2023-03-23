@@ -11,57 +11,80 @@
     class="float-right mr-10 -mt-12 btn btn-primary btn-md hidden sm:flex"
     href="/catalog">Parts Catalog</a
   >
-  <div class="drawer mt-4 text-center absolute sm:hidden z-20">
-    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
-      <!-- Page content here -->
+  <!-- The button to open modal -->
+  <label
+    for="nav-modal"
+    class="sm:hidden  mb-0 mt-6 btn btn-ghost w-full rounded-none bg-gradient-to-r from-blue-900/80 via-blue-800/80 to-blue-700/80"
+    aria-label="open menu"
+    >MENU
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6 ml-2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+    </svg>
+  </label>
+  <!-- Put this part before </body> tag -->
+  <input type="checkbox" id="nav-modal" class="modal-toggle" />
+  <div class="modal">
+    <div class="bg-blue-900 h-full w-full relative overflow-auto">
       <label
-        for="my-drawer"
-        class="btn btn-ghost w-full rounded-none bg-gradient-to-r from-blue-900/80 via-blue-800/80 to-blue-700/80 drawer-button"
-        aria-label="open menu"
-        >MENU
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6 ml-2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-        </svg>
-      </label>
-    </div>
-    <div class="drawer-side">
-      <label for="my-drawer" class="drawer-overlay"></label>
-      <ul
-        class="menu p-4 w-80 bg-blue-900 text-gray-200 font-black text- text-left"
+        for="nav-modal"
+        class="btn btn-sm btn-circle absolute right-2 top-2">✕</label
       >
+      <ul class="menu p-4 w-80 bg-blue-900 text-gray-200 font-black text-left">
         <li><a href="/">HOME</a></li>
         <li><a href="/catalog">PARTS CATALOG</a></li>
         <li><a href="/mining-trucks/control-group">MINING TRUCKS</a></li>
         <ul class="border-b ml-4 text-gray-300">
           <li><a href="/mining-trucks/control-group">- CONTROL GROUP</a></li>
-          <li><a href="/mining-trucks/motorized-wheels">- MOTORIZED WHEELS</a></li>
-          <li><a href="/mining-trucks/dynamic-retarding-assembly">- DYNAMIC RETARDING ASSEMBLY</a></li>
+          <li>
+            <a href="/mining-trucks/motorized-wheels">- MOTORIZED WHEELS</a>
+          </li>
+          <li>
+            <a href="/mining-trucks/dynamic-retarding-assembly"
+              >- DYNAMIC RETARDING ASSEMBLY</a>
+          </li>
           <li><a href="/mining-trucks/alternator">- ALTERNATORS</a></li>
           <li><a href="/mining-trucks/others">- OTHERS</a></li>
         </ul>
         <li><a href="/locomotive/control-cabinets">LOCOMOTIVE</a></li>
         <ul class="border-b ml-4 text-gray-300">
           <li><a href="/locomotive/control-cabinets">- CONTROL CABINET</a></li>
-          <li><a href="/locomotive/engine-main-alternator">- ENGINES & MAIN ALTERNATOR</a></li>
-          <li><a href="/locomotive/dynamic-retarding-assembly">- DYNAMIC RETARDING ASSEMBLY</a></li>
-          <li><a href="/locomotive/trucks-traction-motors">- TRUCKS & TRACTION MOTORS</a></li>
+          <li>
+            <a href="/locomotive/engine-main-alternator"
+              >- ENGINES & MAIN ALTERNATOR</a>
+          </li>
+          <li>
+            <a href="/locomotive/dynamic-retarding-assembly"
+              >- DYNAMIC RETARDING ASSEMBLY</a>
+          </li>
+          <li>
+            <a href="/locomotive/trucks-traction-motors"
+              >- TRUCKS & TRACTION MOTORS</a>
+          </li>
           <li><a href="/locomotive/others">- OTHERS</a></li>
         </ul>
-        <li><a href="/draglines-shovels-drills/card-electronic-panels">DRAGLINES, SHOVELS & DRILLS</a></li>
+        <li>
+          <a href="/draglines-shovels-drills/card-electronic-panels"
+            >DRAGLINES, SHOVELS & DRILLS</a>
+        </li>
         <ul class="border-b ml-4 text-gray-300">
-          <li><a href="/draglines-shovels-drills/card-electronic-panels">- CARDS & ELECTRONIC PANELS</a></li>
-          <li><a href="/draglines-shovels-drills/control-cabinets">- CONTROL CABINETS</a></li>
+          <li>
+            <a href="/draglines-shovels-drills/card-electronic-panels"
+              >- CARDS & ELECTRONIC PANELS</a>
+          </li>
+          <li>
+            <a href="/draglines-shovels-drills/control-cabinets"
+              >- CONTROL CABINETS</a>
+          </li>
           <li><a href="/draglines-shovels-drills/others">- OTHERS</a></li>
         </ul>
         <li><a href="/electric-equipment">ELECTRIC EQUIPMENT</a></li>
