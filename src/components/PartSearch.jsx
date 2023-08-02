@@ -296,7 +296,8 @@ function PartSearch({ partsData }) {
                         </button>
                       )}
                     </td>
-                    <td className="py-3 px-6">{part.PartNumber}</td>
+                    <td className="py-3 px-6"><a
+                        href={`/part/${part.row_number}`}>{part.PartNumber}</a></td>
                     <td className="py-3 px-6">{part.Description}</td>
                     <td className="py-3 px-6">{part.ShortDescription}</td>
                     <td className="py-3 px-6">{part.OEM}</td>
