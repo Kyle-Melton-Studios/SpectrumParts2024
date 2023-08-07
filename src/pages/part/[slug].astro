@@ -25,16 +25,16 @@ const { PartNumber, Description, ShortDescription, OEM } = Astro.props;
 const { slug } = Astro.params;
 ---
 
-<Layout title={`${OEM} ${PartNumber} ${Description} | Spectrum Parts and Components`} desc={`Discover top-quality ${OEM} replacement parts. Our catalog offers a diverse range of reliable ${PartNumber} - ${Description} parts designed to fit your equipment perfectly. Shop now!`}>
+<Layout title={`${PartNumber} ${OEM} ${Description} | Spectrum Parts and Components`} desc={`Discover top-quality ${OEM} replacement parts. Our catalog offers a diverse range of reliable ${PartNumber} - ${Description} parts designed to fit your equipment perfectly. Shop now!`}>
   <main class="mt-6">
     <section class="flex justify-center">
       <div class="flex flex-col p-6 justify-center mx-6 sm:w-2/3 mt-10 bg-gray-50 rounded-md shadow-lg text-gray-900">
         <h1 class="mt-4 text-xl font-bold">
-          {PartNumber} - {Description}
+          {PartNumber} {OEM} {Description}
         </h1>
         <p class="border-b pb-2 mt-4">
           <span class="font-bold">Part Number: </span>
-          {slug}
+          {PartNumber}
         </p>
         <p class="border-b pb-2">
           <span class="font-bold">Description: </span>
