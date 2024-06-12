@@ -10,7 +10,7 @@ import node from "@astrojs/node";
 export default defineConfig({
   site: 'https://spectrum-transport.com',
   integrations: [tailwind(), react(), prefetch(), sitemap()],
-  output: 'server',
+  output: 'hybrid',
   adapter: node({
     mode: "standalone"
   })
