@@ -17,7 +17,7 @@ function toTitleCase(str) {
     return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
 }
 
-const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem));
+const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem)).sort();
 ---
 
 <Layout title="OEM List | Spectrum Parts and Components">
@@ -25,10 +25,10 @@ const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem));
         <h1 class="text-center mt-6 text-3xl font-bold text-gray-800">
             List of OEMs
         </h1>
-        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-700">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             {uniqueOems.map(oem => (
-                <li key={oem} class="px-4 py-2 bg-white rounded shadow-sm">{oem}</li>
+                <div key={oem} class="px-4 py-2 bg-white rounded shadow-sm text-center">{oem}</div>
             ))}
-        </ul>
+        </div>
     </main>
 </Layout>
