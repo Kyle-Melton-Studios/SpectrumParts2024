@@ -28,7 +28,7 @@ const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem)).sort();
         </h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             {uniqueOems.map(oem => (
-                <a href={`/catalog?search=${oem.toLowerCase()}`} class="px-4 py-2 bg-white rounded shadow-sm text-center hover:bg-blue-600 hover:text-white transition-all text-black">{oem}</a>
+                <a href={`/catalog/${oem.toLowerCase()}`} class="px-4 py-2 bg-white rounded shadow-sm text-center hover:bg-blue-600 hover:text-white transition-all text-black">{oem}</a>
             ))}
         </div>
     </main>

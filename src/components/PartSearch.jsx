@@ -1,4 +1,4 @@
-import { useState, useEffect, componentDidMount } from "react";
+import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 function PartSearch({ partsData, searchQuery }) {
@@ -7,15 +7,20 @@ function PartSearch({ partsData, searchQuery }) {
   const [filteredParts, setFilteredParts] = useState(partsData);
   const [saveProducts, setSaveProducts] = useState([]);
   const [savedProducts, setSavedProducts] = useState(
-    JSON.parse(localStorage.getItem("spectrum_products")) || [],
+    JSON.parse(localStorage.getItem("spectrum_products")) || []
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
 
+  useEffect(() => {
+    if (searchQuery) {
+      handleSearch();
+    }
+  }, [searchQuery]);
+
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const searchValue = search;
-    setSearch(searchValue);
     if (searchValue.length === 0) {
       setFilteredParts(parts);
     } else {
@@ -31,14 +36,14 @@ function PartSearch({ partsData, searchQuery }) {
   const deleteProduct = (part) => {
     const newSaveProducts = [...savedProducts];
     const index = newSaveProducts.findIndex(
-      (item) => item.row_number === part.row_number,
+      (item) => item.row_number === part.row_number
     );
     if (index > -1) {
       newSaveProducts.splice(index, 1);
       setSavedProducts(newSaveProducts);
       localStorage.setItem(
         "spectrum_products",
-        JSON.stringify(newSaveProducts),
+        JSON.stringify(newSaveProducts)
       );
       toast.success("Part removed from your list");
     }
@@ -64,13 +69,13 @@ function PartSearch({ partsData, searchQuery }) {
         onClick={() => setCurrentPage(currentPage - 1)}
       >
         Prev
-      </button>,
+      </button>
     );
   } else {
     paginationButtons.push(
       <button className="btn btn-sm btn-primary mr-1" key="previous" disabled>
         Prev
-      </button>,
+      </button>
     );
   }
   if (currentPage < totalPages) {
@@ -81,13 +86,13 @@ function PartSearch({ partsData, searchQuery }) {
         onClick={() => setCurrentPage(currentPage + 1)}
       >
         Next
-      </button>,
+      </button>
     );
   } else {
     paginationButtons.push(
       <button className="btn btn-sm btn-primary" key="next" disabled>
         Next
-      </button>,
+      </button>
     );
   }
 
@@ -170,154 +175,165 @@ function PartSearch({ partsData, searchQuery }) {
           <tbody>
             {filteredParts
               ? currentItems.map((part) => (
-                <tr
-                  key={part.row_number}
-                  className="bg-white border-b hover:bg-gray-200"
-                >
-                  <td className="py-3 px-6">
-                    {savedProducts.find(
-                      (item) => item.PartNumber === part.PartNumber,
-                    ) ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-6 h-6 text-green-500"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    ) : (
-                      <button
-                        className=""
-                        onClick={() => {
-                          {
-                            savedProducts.find(
-                              (item) => item.PartNumber === part.PartNumber,
-                            )
-                              ? toast.error("Part already saved to your list")
-                              : localStorage.setItem(
-                                "spectrum_products",
-                                JSON.stringify([...savedProducts, part]),
-                              );
-                            setSavedProducts([...savedProducts, part]);
-                          }
-                        }}
-                      >
+                  <tr
+                    key={part.row_number}
+                    className="bg-white border-b hover:bg-gray-200"
+                  >
+                    <td className="py-3 px-6">
+                      {savedProducts.find(
+                        (item) => item.PartNumber === part.PartNumber
+                      ) ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
-                          strokeWidth={1.5}
+                          strokeWidth={2}
                           stroke="currentColor"
-                          className="w-6 h-6"
+                          className="w-6 h-6 text-green-500"
                         >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            d="M5 13l4 4L19 7"
                           />
                         </svg>
-                      </button>
-                    )}
-                  </td>
-                  <td className="py-3 px-6">{part.PartNumber}</td>
-                  <td className="py-3 px-6">{part.Description}</td>
-                  <td className="py-3 px-6">{part.ShortDescription}</td>
-                  <td className="py-3 px-6">{part.OEM}</td>
-                  <td className="py-3 px-6 text-center">
-                    <a
-                      href={`/part/${part.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;& ]/g, '-')}`}
-                      className="focus:outline-none text-blue-900 bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
-                    >
-                      <button className="hidden sm:inline">Contact for Availability</button>
-                      <button className="sm:hidden">Contact</button>
-                    </a>
-
-                  </td>
-                </tr>
-              ))
+                      ) : (
+                        <button
+                          className=""
+                          onClick={() => {
+                            {
+                              savedProducts.find(
+                                (item) =>
+                                  item.PartNumber === part.PartNumber
+                              )
+                                ? toast.error(
+                                    "Part already saved to your list"
+                                  )
+                                : localStorage.setItem(
+                                    "spectrum_products",
+                                    JSON.stringify([...savedProducts, part])
+                                  );
+                              setSavedProducts([...savedProducts, part]);
+                            }
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </button>
+                      )}
+                    </td>
+                    <td className="py-3 px-6">{part.PartNumber}</td>
+                    <td className="py-3 px-6">{part.Description}</td>
+                    <td className="py-3 px-6">{part.ShortDescription}</td>
+                    <td className="py-3 px-6">{part.OEM}</td>
+                    <td className="py-3 px-6 text-center">
+                      <a
+                        href={`/catalog/${part.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;& ]/g, '-')}`}
+                        className="focus:outline-none text-blue-900 bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
+                      >
+                        <button className="hidden sm:inline">
+                          Contact for Availability
+                        </button>
+                        <button className="sm:hidden">Contact</button>
+                      </a>
+                    </td>
+                  </tr>
+                ))
               : parts.map((part) => (
-                <tr
-                  key={part.row_number}
-                  className="bg-white border-b hover:bg-gray-200"
-                >
-                  <td className="py-3 px-6">
-                    {savedProducts.find(
-                      (item) => item.PartNumber === part.PartNumber,
-                    ) ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-6 h-6 text-green-500"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    ) : (
-                      <button
-                        className=""
-                        onClick={() => {
-                          {
-                            savedProducts.find(
-                              (item) => item.PartNumber === part.PartNumber,
-                            )
-                              ? toast.error("Part already saved to your list")
-                              : localStorage.setItem(
-                                "spectrum_products",
-                                JSON.stringify([...savedProducts, part]),
-                              );
-                            setSavedProducts([...savedProducts, part]);
-                          }
-                        }}
-                      >
+                  <tr
+                    key={part.row_number}
+                    className="bg-white border-b hover:bg-gray-200"
+                  >
+                    <td className="py-3 px-6">
+                      {savedProducts.find(
+                        (item) => item.PartNumber === part.PartNumber
+                      ) ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
-                          strokeWidth={1.5}
+                          strokeWidth={2}
                           stroke="currentColor"
-                          className="w-6 h-6"
+                          className="w-6 h-6 text-green-500"
                         >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            d="M5 13l4 4L19 7"
                           />
                         </svg>
-                      </button>
-                    )}
-                  </td>
-                  <td className="py-3 px-6">
-                    <a href={`/part/${part.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;& ]/g, '-')}`}
->{part.PartNumber}</a>
-                  </td>
-                  <td className="py-3 px-6">{part.Description}</td>
-                  <td className="py-3 px-6">{part.ShortDescription}</td>
-                  <td className="py-3 px-6">{part.OEM}</td>
-                  <td className="py-3 px-6 text-center">
-                    <a href={`/part/${part.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;& ]/g, '-')}`}
-                      className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
-                    >
-                      <button className=" hidden sm:inline">
-                        Contact for Availability
-                      </button>
-                      <button className=" sm:hidden">Contact</button>
-                    </a>
-                  </td>
-                </tr>
-              ))}
+                      ) : (
+                        <button
+                          className=""
+                          onClick={() => {
+                            {
+                              savedProducts.find(
+                                (item) =>
+                                  item.PartNumber === part.PartNumber
+                              )
+                                ? toast.error(
+                                    "Part already saved to your list"
+                                  )
+                                : localStorage.setItem(
+                                    "spectrum_products",
+                                    JSON.stringify([...savedProducts, part])
+                                  );
+                              setSavedProducts([...savedProducts, part]);
+                            }
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </button>
+                      )}
+                    </td>
+                    <td className="py-3 px-6">
+                      <a
+                        href={`/catalog/${part.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;& ]/g, '-')}`}
+                      >
+                        {part.PartNumber}
+                      </a>
+                    </td>
+                    <td className="py-3 px-6">{part.Description}</td>
+                    <td className="py-3 px-6">{part.ShortDescription}</td>
+                    <td className="py-3 px-6">{part.OEM}</td>
+                    <td className="py-3 px-6 text-center">
+                      <a
+                        href={`/catalog/${part.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;& ]/g, '-')}`}
+                        className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
+                      >
+                        <button className=" hidden sm:inline">
+                          Contact for Availability
+                        </button>
+                        <button className=" sm:hidden">Contact</button>
+                      </a>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </div>
