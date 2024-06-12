@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+export const prerender = true;
 export async function getStaticPaths() {
     const res = await fetch(
         "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
