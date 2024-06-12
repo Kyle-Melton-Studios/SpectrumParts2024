@@ -39,7 +39,7 @@ const savedProducts = [];
         <h1 class="text-center mt-6 text-2xl font-bold text-white">
             PARTS CATALOG
         </h1>
-        <PartSearch client:load partsData={parts} searchQuery={""} />
+        <PartSearch client:only="react" partsData={parts} searchQuery={""} />
     </main>
 
     <div class="footer fixed bottom-0 right-0 left-0 flex">
