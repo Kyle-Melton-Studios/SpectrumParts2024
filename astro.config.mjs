@@ -9,6 +9,6 @@ import netlify from "@astrojs/netlify";
 export default defineConfig({
   site: 'https://spectrum-transport.com',
   integrations: [tailwind(), react(), sitemap()],
-  output: 'server',
+  output: 'hybrid',
   adapter: netlify()
 });
