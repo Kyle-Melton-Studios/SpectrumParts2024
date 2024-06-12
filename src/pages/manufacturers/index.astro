@@ -1,0 +1,34 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const res = await fetch(
+    "https://script.googleusercontent.com/a/macros/meltonstudios.com/echo?user_content_key=qiHeOHK1jVEQwBBvwwWzPENPaItgRYGkGb-dRrYIV-1e9mHqEy_dK5VClYMUR310meUTuJXvXIYnahHffPx8_4DC06TML59jOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKA3UqljHHvY_AUX418cL1gsjnFAkueCBXhaaYtbldv37IXQkpl-Ck3DxonRXcWHvHPmmQFbT_ZQcTn6E5XdTkJ89fQg8W4NFFI11P6wKYQ9aqkGpr9Z3-C-yynPLwjp6CqdJoCw8JvXDg&lib=Mx9yd2PD5TG0oEm5opb-qy50PVyrfBjS_",
+    {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    },
+);
+const items = await res.json();
+const oems = items.data.map(item => item.OEM);
+
+function toTitleCase(str) {
+    return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+}
+
+const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem));
+---
+
+<Layout title="OEM List | Spectrum Parts and Components">
+    <main class="max-w-7xl mx-auto sm:mt-6 px-4 py-8 bg-gray-100 rounded-lg shadow-lg">
+        <h1 class="text-center mt-6 text-3xl font-bold text-gray-800">
+            List of OEMs
+        </h1>
+        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-700">
+            {uniqueOems.map(oem => (
+                <li key={oem} class="px-4 py-2 bg-white rounded shadow-sm">{oem}</li>
+            ))}
+        </ul>
+    </main>
+</Layout>
