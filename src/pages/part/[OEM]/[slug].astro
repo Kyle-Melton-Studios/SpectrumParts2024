@@ -1,0 +1,83 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+export async function getStaticPaths() {
+    const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        },
+    );
+    const pages = await res.json();
+    return pages.data.map((page) => {
+        return {
+            params: {
+                OEM: encodeURIComponent(page.OEM.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '')),
+                slug: encodeURIComponent(page.PartNumber),
+            },
+            props: page,
+        };
+    });
+}
+
+function toTitleCase(str) {
+    return str.replace(/-/g, ' ').replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+const { PartNumber, Description, ShortDescription } = Astro.props;
+const { slug, OEM } = Astro.params;
+---
+
+<Layout
+    title={`${PartNumber} ${toTitleCase(OEM)} ${Description} | Spectrum Parts and Components`}
+    desc={`Discover top-quality ${toTitleCase(OEM)} replacement parts. Our catalog offers a diverse range of reliable ${PartNumber} - ${Description} parts designed to fit your equipment perfectly. Shop now!`}
+>
+    <main class="mt-6">
+        <section class="flex justify-center">
+            <div
+                class="flex flex-col p-6 justify-center mx-6 sm:w-2/3 mt-10 bg-gray-50 rounded-md shadow-lg text-gray-900"
+            >
+                <h1 class="mt-4 text-xl font-bold">
+                    {PartNumber}
+                    {toTitleCase(OEM)}
+                    {Description}
+                </h1>
+                <p class="border-b pb-2 mt-4">
+                    <span class="font-bold">Part Number: </span>
+                    {PartNumber}
+                </p>
+                <p class="border-b pb-2">
+                    <span class="font-bold">Description: </span>
+                    {Description}
+                </p>
+                <p class="border-b pb-2">
+                    <span class="font-bold">Manufacturer: </span>
+                    {toTitleCase(OEM)}
+                </p>
+                <p
+                    class="mb-8 mt-4 lg:mb-8 font-light text-gray-500 sm:text-xl"
+                >
+                    For parts inquiries please contact us.
+                </p>
+                <div class="flex justify-center">
+                    <a href="/catalog">
+                        <button
+                            class="btn mr-6 bg-yellow-500 border-none text-white"
+                        >
+                            Go Back
+                        </button>
+                    </a>
+                    <a href="/quote">
+                        <button class="btn bg-blue-700 text-white">
+                            Get a Quote
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

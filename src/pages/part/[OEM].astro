@@ -1,0 +1,63 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    );
+    const pages = await res.json();
+
+    const paths = pages.data.map((page) => {
+        const OEMSlug = page.OEM.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
+        const filteredParts = pages.data.filter(
+            p => p.OEM.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '') === OEMSlug
+        );
+
+        return {
+            params: {
+                OEM: encodeURIComponent(page.OEM.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '')),
+            },
+            props: {
+                page,
+                filteredParts,
+            },
+        };
+    });
+
+    return { paths };
+}
+
+const { OEM } = Astro.params;
+const { filteredParts } = Astro.props;
+
+---
+
+<Layout
+    title={`Parts for ${OEM} | Spectrum Parts and Components`}
+    desc={`Discover top-quality replacement parts for ${OEM}. Our catalog offers a diverse range of reliable parts designed to fit your equipment perfectly. Shop now!`}
+>
+    <main class="mt-6">
+        <section class="flex justify-center">
+            <div
+                class="flex flex-col p-6 justify-center mx-6 sm:w-2/3 mt-10 bg-gray-50 rounded-md shadow-lg text-gray-900"
+            >
+                <h1 class="mt-4 text-xl font-bold">Parts for {OEM}</h1>
+                <ul>
+                    {filteredParts.map(part => (
+                        <li key={part.PartNumber}>
+                            <a href={`/part/${OEM}/${part.PartNumber}`}>
+                                {part.PartNumber} - {part.Description}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+    </main>
+</Layout>
