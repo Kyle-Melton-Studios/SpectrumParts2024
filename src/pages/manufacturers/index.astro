@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
+
 const res = await fetch(
     "https://script.googleusercontent.com/a/macros/meltonstudios.com/echo?user_content_key=qiHeOHK1jVEQwBBvwwWzPENPaItgRYGkGb-dRrYIV-1e9mHqEy_dK5VClYMUR310meUTuJXvXIYnahHffPx8_4DC06TML59jOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKA3UqljHHvY_AUX418cL1gsjnFAkueCBXhaaYtbldv37IXQkpl-Ck3DxonRXcWHvHPmmQFbT_ZQcTn6E5XdTkJ89fQg8W4NFFI11P6wKYQ9aqkGpr9Z3-C-yynPLwjp6CqdJoCw8JvXDg&lib=Mx9yd2PD5TG0oEm5opb-qy50PVyrfBjS_",
     {
@@ -27,7 +28,7 @@ const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem)).sort();
         </h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             {uniqueOems.map(oem => (
-                <div key={oem} class="px-4 py-2 bg-white rounded shadow-sm text-center text-black">{oem}</div>
+                <a href={`/catalog?search=${oem.toLowerCase()}`} class="px-4 py-2 bg-white rounded shadow-sm text-center hover:bg-blue-600 hover:text-white transition-all text-black">{oem}</a>
             ))}
         </div>
     </main>

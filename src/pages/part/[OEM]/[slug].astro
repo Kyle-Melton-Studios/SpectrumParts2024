@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+export const prerender = true;
 export async function getStaticPaths() {
     const res = await fetch(
         "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
     return pages.data.map((page) => {
         return {
             params: {
-                OEM: encodeURIComponent(page.OEM.toLowerCase().replace(/[:#$?",; ]/g, '-')),
+                OEM: encodeURIComponent(page.OEM.toLowerCase().replace(/[:#$?",;& ]/g, '-')),
                 slug: encodeURIComponent(page.PartNumber.replace(/[:#$?" ]/g, '-')),
             },
             props: page,

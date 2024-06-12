@@ -1,6 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import PartSearch from "../components/PartSearch.jsx";
+import Layout from "../../layouts/Layout.astro";
+import PartSearch from "../../components/PartSearch.jsx";
+
+const searchQuery = Astro.url.searchParams.get('search') || '';
 
 const res = await fetch(
     "https://script.google.com/macros/s/AKfycbx3qXfCkWgD1XxRTOznHOioui7C1-kc_SXG7cdTvFpdD-BuPrbl-hc81HzwCLvldsgaZA/exec",
@@ -9,7 +11,7 @@ const res = await fetch(
         headers: {
             "Content-Type": "application/json",
         },
-    },
+    }
 );
 const items = await res.json();
 
@@ -38,7 +40,7 @@ const savedProducts = [];
         <h1 class="text-center mt-6 text-2xl font-bold text-white">
             PARTS CATALOG
         </h1>
-        <PartSearch client:load partsData={parts} />
+        <PartSearch client:only="react" partsData={parts} searchQuery={searchQuery} />
     </main>
 
     <div class="footer fixed bottom-0 right-0 left-0 flex">
