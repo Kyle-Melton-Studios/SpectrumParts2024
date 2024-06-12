@@ -15,8 +15,8 @@ export async function getStaticPaths() {
     return pages.data.map((page) => {
         return {
             params: {
-                OEM: encodeURIComponent(page.OEM.toLowerCase().replace(/[:#$?",;&/ ]/g, '-')),
-                slug: encodeURIComponent(page.PartNumber.replace(/[:#$?"/ ]/g, '-')),
+                OEM: encodeURIComponent(page.OEM.toLowerCase().replace(/[:#$?",;&/% ]/g, '-')),
+                slug: encodeURIComponent(page.PartNumber.replace(/[:#$?",;&/% ]/g, '-')),
             },
             props: page,
         };
