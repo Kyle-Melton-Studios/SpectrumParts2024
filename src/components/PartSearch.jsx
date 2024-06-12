@@ -240,7 +240,7 @@ function PartSearch({ partsData, searchQuery }) {
                     <td className="py-3 px-6">{part.OEM}</td>
                     <td className="py-3 px-6 text-center">
                       <a
-                        href={`/catalog/${part.OEM.toLowerCase().replace(/[:#$?",;&/% ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;&/% ]/g, '-')}`}
+                        href={`/catalog/${part.OEM.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-')}/${part.PartNumber.replace(/[^a-zA-Z0-9]/g, '-')}`}
                         className="focus:outline-none text-blue-900 bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
                       >
                         <button className="hidden sm:inline">
@@ -313,7 +313,7 @@ function PartSearch({ partsData, searchQuery }) {
                     </td>
                     <td className="py-3 px-6">
                       <a
-                        href={`/catalog/${part.OEM.toLowerCase().replace(/[:#$?",;&/% ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;&/% ]/g, '-')}`}
+                        href={`/catalog/${part.OEM.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-')}/${part.PartNumber.replace(/[^a-zA-Z0-9]/g, '-')}`}
                       >
                         {part.PartNumber}
                       </a>
@@ -323,7 +323,7 @@ function PartSearch({ partsData, searchQuery }) {
                     <td className="py-3 px-6">{part.OEM}</td>
                     <td className="py-3 px-6 text-center">
                       <a
-                        href={`/catalog/${part.OEM.toLowerCase().replace(/[:#$?",;&/% ]/g, '-')}/${part.PartNumber.replace(/[:#$?",;&/% ]/g, '-')}`}
+                        href={`/catalog/${part.OEM.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-')}/${part.PartNumber.replace(/[^a-zA-Z0-9]/g, '-')}`}
                         className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
                       >
                         <button className=" hidden sm:inline">
