@@ -22,14 +22,14 @@ function toTitleCase(str) {
 const uniqueOems = [...new Set(oems.map(oem => toTitleCase(oem)))].sort();
 ---
 
-<Layout title="OEM List | Spectrum Parts and Components" desc="">
+<Layout title="OEM List | Spectrum Parts and Components" desc="Explore our extensive list of OEMs, including General Electric, Cutler Hammer, and Allen Bradley. We supply high-quality parts for mining trucks, locomotives, and more.">
     <main class="max-w-7xl mx-auto sm:mt-6 px-4 py-8 bg-gray-100 rounded-lg shadow-lg">
         <h1 class="text-center mt-6 text-3xl font-bold text-gray-800">
             List of OEMs
         </h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             {uniqueOems.map(oem => (
-                <a href={`/catalog/${oem.toLowerCase()}`} class="px-4 py-2 bg-white rounded shadow-sm text-center hover:bg-blue-600 hover:text-white transition-all text-black">{oem}</a>
+                <div class="px-4 py-2 bg-white rounded shadow-sm text-center hover:bg-blue-600 hover:text-white transition-all text-black">{oem}</div>
             ))}
         </div>
     </main>
