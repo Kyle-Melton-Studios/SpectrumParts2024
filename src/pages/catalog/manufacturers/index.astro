@@ -1,7 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
 
-
 const res = await fetch(
     "https://script.googleusercontent.com/a/macros/meltonstudios.com/echo?user_content_key=qiHeOHK1jVEQwBBvwwWzPENPaItgRYGkGb-dRrYIV-1e9mHqEy_dK5VClYMUR310meUTuJXvXIYnahHffPx8_4DC06TML59jOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKA3UqljHHvY_AUX418cL1gsjnFAkueCBXhaaYtbldv37IXQkpl-Ck3DxonRXcWHvHPmmQFbT_ZQcTn6E5XdTkJ89fQg8W4NFFI11P6wKYQ9aqkGpr9Z3-C-yynPLwjp6CqdJoCw8JvXDg&lib=Mx9yd2PD5TG0oEm5opb-qy50PVyrfBjS_",
     {
@@ -14,11 +13,13 @@ const res = await fetch(
 const items = await res.json();
 const oems = items.data.map(item => item.OEM);
 
+// Function to convert string to Title Case
 function toTitleCase(str) {
     return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
 }
 
-const uniqueOems = [...new Set(oems)].map(oem => toTitleCase(oem)).sort();
+// Create a unique, sorted list of OEMs
+const uniqueOems = [...new Set(oems.map(oem => toTitleCase(oem)))].sort();
 ---
 
 <Layout title="OEM List | Spectrum Parts and Components" desc="">
